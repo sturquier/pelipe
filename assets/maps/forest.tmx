@@ -3,6 +3,9 @@
  <tileset firstgid="1" name="land" tilewidth="32" tileheight="32" tilecount="1024" columns="32">
   <image source="tilesets/outside/land.png" width="1024" height="1024"/>
  </tileset>
+ <tileset firstgid="1025" name="logic" tilewidth="32" tileheight="32" tilecount="25" columns="5">
+  <image source="tilesets/mix/logic.png" width="160" height="160"/>
+ </tileset>
  <layer name="one" width="20" height="15">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC8tgZmDIGMWjeBSP4iGAAb98NImwBAAA
@@ -10,12 +13,17 @@
  </layer>
  <layer name="two" width="20" height="15">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NgGNygmomBoYaJcnOqmCBmzQbiOVQwbxbUrMEORsOPMjAafpQBaocfACowUliwBAAA
+   H4sIAAAAAAAAC2NgGNygmomBoYaJcnOqmCBmzQbiOSSYN4GRgWEiI6b4LKhZpIINQLM2YjGPXHABaNZFPOYNdPjhAuSGH73BaPhRBqgdfgAkhsBIsAQAAA==
   </data>
  </layer>
  <layer name="three" width="20" height="15">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC1NgZmCoB2JKgTzQDAUgdgDiBCqYZw81i+oAaGY8Fcz9zwQxS2E0/MgCo+FHGRip4QcAh1/amLAEAAA=
+  </data>
+ </layer>
+ <layer name="logic" width="20" height="15">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgYGDgYGGgGHAimTGczOMFquXDop5c80D6sKkn1zwhoFphKpqHC4yaN2reYDAPAAwhJx+wBAAA
   </data>
  </layer>
 </map>

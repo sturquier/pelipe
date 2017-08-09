@@ -2,10 +2,10 @@ package entities;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import map.Map;
 
 public class Player
 {
@@ -13,9 +13,16 @@ public class Player
 	private float x = 200, y = 300;
 	private int direction = 2;
 	private boolean moving = false;
+	private boolean running = false;
 	private Animation[] animations = new Animation[8];
+	private Map map;
 	
-	public void init(GameContainer gc) throws SlickException
+	public Player(Map map)
+	{
+		this.map = map;
+	}
+	
+	public void init() throws SlickException
 	{
 		SpriteSheet spriteSheet = new SpriteSheet("assets/sprites/hero/archer_walk.png", 64, 64);
 		
@@ -29,31 +36,60 @@ public class Player
 		this.animations[7] = loadAnimation(spriteSheet, 1, 9, 3);
 	}
 	
-	public void render(GameContainer container, Graphics g) throws SlickException
+	public void render(Graphics g) throws SlickException
 	{
 		g.setColor(new Color(0, 0, 0, .5f));
 	    g.fillOval(x - 16, y - 8, 32, 16);
 	    g.drawAnimation(animations[direction + (moving ? 4 : 0)], x-32, y-60);
 	}
 	
-	public void update(GameContainer container, int delta) throws SlickException 
+	public void update(int delta) throws SlickException 
 	{
-	    if (this.moving) {
-	        switch (this.direction) {
-	            case 0: 
-	            	this.y -= .1f * delta;
-	            	break;
-	            case 1:
-	            	this.x -= .1f * delta;
-	            	break;
-	            case 2:
-	            	this.y += .1f * delta;
-	            	break;
-	            case 3:
-	            	this.x += .1f * delta;
-	            	break;
+		if (this.moving) {
+	        float futurX = getFuturX(delta);
+	        float futurY = getFuturY(delta);
+	        boolean collision = this.map.isCollision(futurX, futurY);
+	        if (collision) {
+	            this.moving = false;
+	        } else {
+	            this.x = futurX;
+	            this.y = futurY;
 	        }
 	    }
+	}
+	
+	private float getFuturX(int delta) 
+	{
+	    float futurX = this.x;
+	    float speed = this.running ? .2f : .1f;
+	    
+	    switch (this.direction) {
+	    	case 1: 
+	    		futurX = this.x - speed * delta; 
+	    		break;
+	    	case 3: 
+	    		futurX = this.x + speed * delta; 
+	    		break;
+	    }
+	    
+	    return futurX;
+	}
+
+	private float getFuturY(int delta)
+	{
+	    float futurY = this.y;
+	    float speed = this.running ? .2f : .1f;
+	    
+	    switch (this.direction) {
+	    	case 0: 
+	    		futurY = this.y - speed * delta;
+	    		break;
+	    	case 2: 
+	    		futurY = this.y + speed * delta;
+	    		break;
+	    }
+	    
+	    return futurY;
 	}
 	
 	private Animation loadAnimation(SpriteSheet spriteSheet, int startX, int endX, int y)
@@ -72,18 +108,28 @@ public class Player
 		return this.direction;
 	}
 	
-	public boolean isMoving()
-	{
-		return this.moving;
-	}
-	
 	public void setDirection(int direction)
 	{
 		this.direction = direction;
 	}
 	
+	public boolean isMoving()
+	{
+		return this.moving;
+	}
+	
 	public void setMoving(boolean moving)
 	{
 		this.moving = moving;
+	}
+
+	public boolean isRunning()
+	{
+		return running;
+	}
+
+	public void setRunning(boolean running)
+	{
+		this.running = running;
 	}
 }

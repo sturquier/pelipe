@@ -41,13 +41,32 @@ public class PlayerController implements KeyListener
 				this.player.setDirection(3);
 				this.player.setMoving(true);
 				break;
-		}
+			case Input.KEY_SPACE:
+				if (this.player.isMoving()) {
+					this.player.setRunning(true);
+				}
+			}
 	}
 
 	@Override
 	public void keyReleased(int key, char c)
 	{
-		this.player.setMoving(false);
+		switch(key) {
+			case Input.KEY_UP:
+				this.player.setMoving(false);
+				break;
+			case Input.KEY_LEFT:
+				this.player.setMoving(false);
+				break;
+			case Input.KEY_DOWN:
+				this.player.setMoving(false);
+				break;
+			case Input.KEY_RIGHT:
+				this.player.setMoving(false);
+				break;
+			case Input.KEY_SPACE:
+				this.player.setRunning(false);
+		}
 	}
 	
 	@Override
